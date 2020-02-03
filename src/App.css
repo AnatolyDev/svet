@@ -1,0 +1,51 @@
+.app {
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100vh;
+}
+
+.header-main {
+}
+
+.header-toolbar {
+  display: flex;
+  flex-flow: row nowrap;
+  background-color: black;
+}
+
+.header-toolbar .header-title {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.main {
+  flex-grow: 1;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+}
+
+.main .main-picture {
+  background-color: chartreuse;
+  flex-grow: 1;
+}
+
+.main .main-options {
+  flex-basis: 50%;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.footer {
+  height: 60px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: stretch;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.footer-btn {
+  flex-grow: 1;
+  flex-basis: 200px;
+}
