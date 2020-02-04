@@ -1,18 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
+import ClearIcon from '@material-ui/icons/Clear';
 import { withStyles } from '@material-ui/core/styles';
 
 const StyledMenu = withStyles({
@@ -37,14 +32,26 @@ const StyledMenu = withStyles({
 
 const StyledMenuItem = withStyles(theme => ({
   root: {
-    '&:focus': {
-      backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+    '&:hover': {
       '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-        color: theme.palette.common.white,
+        color: theme.palette.common.black,
       },
     },
   },
 }))(MenuItem);
+
+const menuNames = [
+  'Обучающее видео',
+  'Оформление заказа',
+  'Оплата',
+  'Доставка',
+  'Гарантия',
+  'Возврат',
+  'Контакты',
+  'Партнёрам',
+]
 
 const Header = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -65,7 +72,7 @@ const Header = (props) => {
                         Fulogy
                     </Typography>
                     <IconButton edge='start' className='menu-button' color='inherit' aria-label='menu' onClick={handleClick}>
-                        <MenuIcon />
+                        {anchorEl ? <ClearIcon />:<MenuIcon />}
                     </IconButton>
                 </Toolbar>
             </AppBar>
@@ -77,24 +84,15 @@ const Header = (props) => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <StyledMenuItem>
-                <ListItemIcon>
-                  <SendIcon fontSize="small" />
-                </ListItemIcon>
-                <ListItemText primary="Sent mail" />
-              </StyledMenuItem>
-              <StyledMenuItem>
-                <ListItemIcon>
-                  <DraftsIcon fontSize="small" />
-                </ListItemIcon>
-                <ListItemText primary="Drafts" />
-              </StyledMenuItem>
-              <StyledMenuItem>
-                <ListItemIcon>
-                  <InboxIcon fontSize="small" />
-                </ListItemIcon>
-                <ListItemText primary="Inbox" />
-              </StyledMenuItem>
+              {
+                menuNames.map(
+                  item => (
+                    <StyledMenuItem>
+                      <ListItemText primary={item} />
+                    </StyledMenuItem>
+                  )
+                )
+              }
             </StyledMenu>
         </div>
     )
