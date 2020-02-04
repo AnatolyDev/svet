@@ -4,62 +4,58 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Button from '@material-ui/core/Button';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import { grey } from '@material-ui/core/colors';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import DraftsIcon from '@material-ui/icons/Drafts';
+import SendIcon from '@material-ui/icons/Send';
+import { withStyles } from '@material-ui/core/styles';
+
+const StyledMenu = withStyles({
+  paper: {
+    border: '1px solid #d3d4d5',
+  },
+})(props => (
+  <Menu
+    elevation={0}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'center',
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'center',
+    }}
+    {...props}
+  />
+));
+
+const StyledMenuItem = withStyles(theme => ({
+  root: {
+    '&:focus': {
+      backgroundColor: theme.palette.primary.main,
+      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+        color: theme.palette.common.white,
+      },
+    },
+  },
+}))(MenuItem);
 
 const Header = (props) => {
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [openMenu, setOpenMenu] = useState(false);
-    const open = Boolean(anchorEl);
-    const MenuItemsNames = [
-        'Обучающее видео',
-        'Оформление заказа',
-        'Оплата',
-        'Доставка',
-        'Гарантия',
-        'Возврат',
-        'Контакты',
-        'Партнёрам'
-    ]
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
-    const sideList = () => (
-      <div
-        className='menu-list'
-        role="presentation"
-        onClick={() => setOpenMenu(false)}
-        onKeyDown={() => setOpenMenu(false)}
-      >
-        <List>
-            <ListItem button onClick={() => setOpenMenu(false)}>
-              <ListItemIcon>{<InboxIcon />}</ListItemIcon>
-              <ListItemText primary='Главная' style={{color: 'black'}}/>
-            </ListItem>              
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
 
-            <ListItem button onClick={() => setOpenMenu(false)}>
-              <ListItemIcon>{<InboxIcon />}</ListItemIcon>
-              <ListItemText primary='Афиша' style={{color: 'black'}}/>
-            </ListItem>              
-        </List>
-
-        
-      </div>
-    );
-  
-    const handleMenu = event => {
-      setAnchorEl(event.currentTarget);
-    };
-  
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
     return (
         <div className='header-main'>
@@ -68,11 +64,38 @@ const Header = (props) => {
                     <Typography variant="h6" className='header-title'>
                         Fulogy
                     </Typography>
-                    <IconButton edge="start" className='menu-button' color="inherit" aria-label="menu" onClick={() => setOpenMenu(true)}>
+                    <IconButton edge='start' className='menu-button' color='inherit' aria-label='menu' onClick={handleClick}>
                         <MenuIcon />
                     </IconButton>
                 </Toolbar>
             </AppBar>
+
+            <StyledMenu
+              id="customized-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <StyledMenuItem>
+                <ListItemIcon>
+                  <SendIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="Sent mail" />
+              </StyledMenuItem>
+              <StyledMenuItem>
+                <ListItemIcon>
+                  <DraftsIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="Drafts" />
+              </StyledMenuItem>
+              <StyledMenuItem>
+                <ListItemIcon>
+                  <InboxIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="Inbox" />
+              </StyledMenuItem>
+            </StyledMenu>
         </div>
     )
 }
